@@ -1,10 +1,11 @@
+import Image from 'next/image'
 import React from 'react'
 
 export default function Post() {
     return (
         <div className="card lg:card-side bg-base-100 shadow-xl">
             <figure>
-                <img
+                <Image
                     src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.jpg"
                     alt="Album"
                 />
