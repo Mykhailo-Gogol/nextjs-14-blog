@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <SessionWrapper>
-      <html lang="en">
+      <html lang="en" data-theme="light">
         <body className={inter.className}>
           <main>
             <Header />

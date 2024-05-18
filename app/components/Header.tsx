@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function Header() {
   return (
-    <header className="navbar bg-base-100">
+    <header className="navbar bg-base-100 shadow-lg">
       <div className="flex-1">
         <Link href="/" className="btn btn-ghost text-xl">
           daisyUI

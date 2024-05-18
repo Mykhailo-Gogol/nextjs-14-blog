@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function Hero() {
   return (
-    <div className="hero min-h-screen bg-base-200">
+    <div className="hero min-h-screen bg-base-200 shadow-lg">
       <div className="hero-content w-full flex flex-col-reverse md:flex-row md:justify-between gap-10">
         <div className="max-w-md">
           <h1 className="text-5xl font-bold">Hello there</h1>
