@@ -19,14 +19,13 @@ export default function Home() {
           alt={session.user?.name || ''}
           width={150}
           height={150}
+          className="rounded-md mb-5"
         />
-        <h1 className="font-bold">{session.user?.name}</h1>
-        <span className="font-bold">{session.user?.email}</span>
-
-        <button
-          onClick={() => signOut()}
-          className="mx-auto block btn btn-error my-10"
-        >
+        <div className="mb-5">
+          <h1 className="font-bold">{session.user?.name}</h1>
+          <span className="font-bold">{session.user?.email}</span>
+        </div>
+        <button onClick={() => signOut()} className="btn btn-error">
           Sign out
         </button>
       </div>
@@ -36,7 +35,7 @@ export default function Home() {
   // rendering components for not logged in users
   return (
     <div>
-      <div className="text-center ">
+      <div className="text-center">
         <h1 className="text-5xl font-bold">Login now!</h1>
         <p className="py-6">
           Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
@@ -44,12 +43,21 @@ export default function Home() {
           id nisi.
         </p>
       </div>
-      <button
-        onClick={() => signIn('github')}
-        className="mx-auto block btn btn-neutral"
-      >
-        Sign in with github
-      </button>
+      <div className="flex flex-col md:flex-row md:justify-center">
+        <button
+          onClick={() => signIn('github')}
+          className="mx-5 my-2 btn btn-neutral"
+        >
+          Sign in with GitHub
+        </button>
+
+        <button
+          onClick={() => signIn('google')}
+          className="mx-5 my-2 btn btn-neutral"
+        >
+          Sign in with Google
+        </button>
+      </div>
     </div>
   )
 }

@@ -19,7 +19,7 @@ const config: Config = {
 
   // daisyui
   daisyui: {
-    themes: ['light', 'dark'],
+    themes: ['light', 'dark', 'cyberpunk'],
   },
 }
 export default config
