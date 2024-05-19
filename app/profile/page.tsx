@@ -1,12 +1,17 @@
-import React from 'react'
-import ProfileDetails from '@/components/ProfileDetails'
+import { Suspense } from 'react'
+import ProfileForm from './profile-form'
+import { createClient } from '@/utils/supabase/server'
 
-export default function Profile() {
+export default async function Profile() {
+  const supabase = createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
   return (
-    <section className="hero p-5 min-h-screen bg-base-200">
-      <div className="md:w-1/2">
-        <ProfileDetails />
-      </div>
-    </section>
+    <Suspense>
+      <ProfileForm user={user} />
+    </Suspense>
   )
 }

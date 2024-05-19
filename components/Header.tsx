@@ -1,7 +1,13 @@
+import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
 import React from 'react'
 
-export default function Header() {
+export default async function Header() {
+  const supabase = createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   return (
     <header className="navbar bg-base-100 shadow-lg">
       <div className="flex-1">
@@ -16,7 +22,7 @@ export default function Header() {
         <Link href="/about" className="mx-5">
           About
         </Link>
-        <Link href="/profile" className="mx-5">
+        <Link href={user ? '/profile' : '/auth/signin'} className="mx-5">
           Profile
         </Link>
       </nav>

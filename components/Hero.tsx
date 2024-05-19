@@ -1,7 +1,14 @@
+import { createClient } from '@/utils/supabase/server'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
-export default function Hero() {
+export default async function Hero() {
+  const supabase = createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   return (
     <div className="hero min-h-screen shadow-lg">
       <div className="hero-content w-full flex flex-col-reverse md:flex-row md:justify-between gap-10">
@@ -12,7 +19,12 @@ export default function Hero() {
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
             a id nisi.
           </p>
-          <button className="btn btn-primary">Get Started</button>
+          <Link
+            href={user ? '/profile' : '/auth/signin'}
+            className="btn btn-primary"
+          >
+            Get Started
+          </Link>
         </div>
         <Image
           src="/hero.jpg"
