@@ -4,34 +4,37 @@ import React, { useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import Image from 'next/image'
 
-export default function Avatar({
+export default function UploadImage({
   uid,
   url,
   size,
   onUpload,
+  storage,
 }: {
   uid: string | null
   url: string | null
   size: number
   // eslint-disable-next-line no-unused-vars
   onUpload: (url: string) => void
+  storage: 'avatars' | 'posters'
 }) {
   const supabase = createClient()
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(url)
+  const [imageUrl, setImageUrl] = useState<string | null>(url)
   const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
+    // avatarts, posts
     async function downloadImage(path: string) {
       try {
         const { data, error } = await supabase.storage
-          .from('avatars')
+          .from(storage)
           .download(path)
         if (error) {
           throw error
         }
 
         const url = URL.createObjectURL(data)
-        setAvatarUrl(url)
+        setImageUrl(url)
       } catch (error) {
         console.log('Error downloading image: ', error)
       }
@@ -39,7 +42,7 @@ export default function Avatar({
 
     if (url) {
       downloadImage(url)
-    }
+    } else setImageUrl(null)
   }, [url, supabase])
 
   const uploadAvatar: React.ChangeEventHandler<HTMLInputElement> = async (
@@ -54,10 +57,10 @@ export default function Avatar({
 
       const file = event.target.files[0]
       const fileExt = file.name.split('.').pop()
-      const filePath = `${uid}-${Math.random()}.${fileExt}`
+      const filePath = `${storage}-${uid}-${Math.random()}.${fileExt}`
 
       const { error: uploadError } = await supabase.storage
-        .from('avatars')
+        .from(storage)
         .upload(filePath, file)
 
       if (uploadError) {
@@ -66,7 +69,7 @@ export default function Avatar({
 
       onUpload(filePath)
     } catch (error) {
-      alert('Error uploading avatar!')
+      alert('Error uploading image!')
     } finally {
       setUploading(false)
     }
@@ -80,8 +83,11 @@ export default function Avatar({
             <Image
               width={size}
               height={size}
-              src={avatarUrl || '/user.png'}
-              alt="Avatar"
+              src={
+                imageUrl ||
+                (storage === 'avatars' ? '/user.png' : '/upload_post_image.png')
+              }
+              alt="upload-image"
               className="mb-5"
               style={{ height: size, width: size }}
             />
@@ -90,7 +96,7 @@ export default function Avatar({
       </div>
 
       <div className="mb-5">
-        <label className="btn btn-primary w-full" htmlFor="single">
+        <label className="btn btn-primary w-full" htmlFor={storage}>
           {uploading ? 'Uploading ...' : 'Upload'}
         </label>
         <input
@@ -99,7 +105,7 @@ export default function Avatar({
             position: 'absolute',
           }}
           type="file"
-          id="single"
+          id={storage}
           accept="image/*"
           onChange={uploadAvatar}
           disabled={uploading}

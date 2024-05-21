@@ -1,6 +1,8 @@
 import React from 'react'
 import { signin } from './actions'
+
 import Link from 'next/link'
+import Google from '@/components/google-sign-in'
 
 export default function SignIn() {
   return (
@@ -22,11 +24,16 @@ export default function SignIn() {
           required
           className="input input-bordered w-full mb-5"
         />
-        <button className="btn mb-5 w-full" formAction={signin}>
+        <button formAction={signin} className="btn mb-5 w-full">
           Sign in
         </button>
+
+        <Link href="/auth/signup" className="block w-full mb-5 text-center">
+          or Sign up
+        </Link>
+
+        <Google />
       </form>
-      <Link href="/auth/signup">or Sign up</Link>
     </section>
   )
 }

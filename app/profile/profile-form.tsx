@@ -3,14 +3,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { type User } from '@supabase/supabase-js'
-import Avatar from './avatar'
+import UploadImage from './upload-image'
 
 export default function ProfileForm({ user }: { user: User | null }) {
   const supabase = createClient()
   const [loading, setLoading] = useState(true)
   const [fullname, setFullname] = useState<string | null>(null)
   const [username, setUsername] = useState<string | null>(null)
-  const [avatar_url, setAvatarUrl] = useState<string | null>(null)
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
 
   const getProfile = useCallback(async () => {
     try {
@@ -60,20 +60,11 @@ export default function ProfileForm({ user }: { user: User | null }) {
         id: user?.id as string,
         full_name: fullname,
         username,
-
         avatar_url,
         updated_at: new Date().toISOString(),
       })
 
-      const { error: user_data_error } = await supabase
-        .from('user_data')
-        .upsert({
-          id: user?.id as string,
-
-          updated_at: new Date().toISOString(),
-        })
       if (error) throw error
-      if (user_data_error) throw user_data_error
 
       alert('Profile updated!')
     } catch (error) {
@@ -84,11 +75,11 @@ export default function ProfileForm({ user }: { user: User | null }) {
   }
 
   return (
-    <section className="flex justify-center items-center p-5 min-h-screen flex-col">
-      <div className="md:w-1/3 mx-auto">
-        <Avatar
+    <section className="w-full p-5 min-h-screen flex-col">
+      <div>
+        <UploadImage
           uid={user?.id ?? null}
-          url={avatar_url}
+          url={avatarUrl}
           size={150}
           onUpload={(url) => {
             setAvatarUrl(url)
@@ -98,6 +89,7 @@ export default function ProfileForm({ user }: { user: User | null }) {
               avatar_url: url,
             })
           }}
+          storage="avatars"
         />
         <input
           className="input input-bordered w-full mb-5"
@@ -131,7 +123,7 @@ export default function ProfileForm({ user }: { user: User | null }) {
             updateProfile({
               fullname,
               username,
-              avatar_url,
+              avatar_url: avatarUrl,
             })
           }
           disabled={loading}

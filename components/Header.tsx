@@ -8,6 +8,7 @@ export default async function Header() {
   const {
     data: { user },
   } = await supabase.auth.getUser()
+
   return (
     <header className="navbar bg-base-100 shadow-lg">
       <div className="flex-1">
