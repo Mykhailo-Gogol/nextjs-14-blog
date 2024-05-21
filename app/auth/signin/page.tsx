@@ -2,7 +2,7 @@ import React from 'react'
 import { signin } from './actions'
 
 import Link from 'next/link'
-import Google from '@/components/google-sign-in'
+import GoogleSignIn from '@/components/GoogleSignIn'
 
 export default function SignIn() {
   return (
@@ -32,7 +32,7 @@ export default function SignIn() {
           or Sign up
         </Link>
 
-        <Google />
+        <GoogleSignIn />
       </form>
     </section>
   )
