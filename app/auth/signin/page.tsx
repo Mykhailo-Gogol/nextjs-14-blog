@@ -28,8 +28,11 @@ export default function SignIn() {
           Sign in
         </button>
 
-        <Link href="/auth/signup" className="block w-full mb-5 text-center">
-          or Sign up
+        <Link
+          href="/auth/signup"
+          className="btn btn-ghost w-full mb-10 text-center"
+        >
+          Sign up
         </Link>
 
         <GoogleSignIn />

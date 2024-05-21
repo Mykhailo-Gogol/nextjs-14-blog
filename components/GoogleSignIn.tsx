@@ -13,10 +13,7 @@ export default function GoogleSignIn() {
       .signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo:
-            process.env.NODE_ENV === 'production'
-              ? 'https://*.vercel.app/auth/callback'
-              : 'http://localhost:3000/auth/callback',
+          redirectTo: process.env.GOOGLE_REDIRECT_URL,
         },
       })
       .then()
@@ -30,7 +27,7 @@ export default function GoogleSignIn() {
       className="btn mb-5 w-full"
     >
       <FontAwesomeIcon icon={faGoogle} width={20} height={20} />
-      <span className="pl-2">Login with Google</span>
+      <span className="pl-2">Sign in with Google</span>
     </button>
   )
 }
