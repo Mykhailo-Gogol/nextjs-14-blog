@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
 const redirectTo =
-  process.env.GOOGLE_REDIRECT_URL ?? 'http://localhost:3000/auth/callback'
+  process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL ??
+  'http://localhost:3000/auth/callback'
 
 export default function GoogleSignIn() {
   const supabase = createClient()
