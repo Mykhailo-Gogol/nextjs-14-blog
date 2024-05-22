@@ -6,7 +6,8 @@ import { type User } from '@supabase/supabase-js'
 import UploadImage from './upload-image'
 
 export default function CreateForm({ user }: { user: User | null }) {
-  console.log(process.env.NODE_ENV)
+  console.log('env', process.env.NODE_ENV)
+
   const supabase = createClient()
   const [loading, setLoading] = useState(false)
   const [title, setTitle] = useState<string | null>(null)

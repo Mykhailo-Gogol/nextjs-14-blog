@@ -10,7 +10,7 @@ export default async function Header() {
   } = await supabase.auth.getUser()
 
   return (
-    <header className="navbar bg-base-100 shadow-lg">
+    <header className="navbar bg-base-100 shadow-lg sticky top-0 z-10">
       <div className="flex-1">
         <Link href="/" className="btn btn-ghost text-xl">
           daisyUI
