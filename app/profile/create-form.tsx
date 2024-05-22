@@ -6,6 +6,7 @@ import { type User } from '@supabase/supabase-js'
 import UploadImage from './upload-image'
 
 export default function CreateForm({ user }: { user: User | null }) {
+  console.log(process.env.NODE_ENV)
   const supabase = createClient()
   const [loading, setLoading] = useState(false)
   const [title, setTitle] = useState<string | null>(null)
@@ -56,39 +57,38 @@ export default function CreateForm({ user }: { user: User | null }) {
           }}
           storage="posters"
         />
-
-        <input
-          className="input input-bordered w-full mb-5"
-          required
-          id="title"
-          placeholder="Post Title"
-          type="text"
-          value={title || ''}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-
-        <textarea
-          required
-          id="content"
-          className="textarea textarea-accent w-full h-60"
-          placeholder="..."
-          value={content || ''}
-          onChange={(e) => setContent(e.target.value)}
-        ></textarea>
-
-        <button
-          className="btn mb-5 w-full"
-          onClick={() =>
+        <form
+          onSubmit={() => {
             createPost({
               title,
               content,
               poster_url: posterURL,
             })
-          }
-          disabled={loading}
+          }}
         >
-          {loading ? 'Uploading ...' : 'Post'}
-        </button>
+          <input
+            className="input input-bordered w-full mb-5"
+            required
+            id="title"
+            placeholder="Post Title"
+            type="text"
+            value={title || ''}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+
+          <textarea
+            required
+            id="content"
+            className="textarea textarea-accent w-full h-60"
+            placeholder="..."
+            value={content || ''}
+            onChange={(e) => setContent(e.target.value)}
+          ></textarea>
+
+          <button className="btn mb-5 w-full" disabled={loading} type="submit">
+            {loading ? 'Uploading ...' : 'Post'}
+          </button>
+        </form>
       </div>
     </section>
   )
