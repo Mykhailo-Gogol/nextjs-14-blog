@@ -59,7 +59,9 @@ export default function CreateForm({ user }: { user: User | null }) {
           storage="posters"
         />
         <form
-          onSubmit={() => {
+          onSubmit={(e) => {
+            e.preventDefault()
+
             createPost({
               title,
               content,

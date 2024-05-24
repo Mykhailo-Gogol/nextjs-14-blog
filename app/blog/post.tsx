@@ -52,7 +52,7 @@ export default function Post({
       <div className="card-body items-center text-center">
         <h2 className="card-title">{post.title}</h2>
         <p>{post.content}</p>
-        <span>{String(new Date(post.created_at).toLocaleDateString())}</span>
+        <span>{String(new Date(post.created_at).toDateString())}</span>
       </div>
     </div>
   )

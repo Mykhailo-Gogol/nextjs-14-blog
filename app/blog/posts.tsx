@@ -22,6 +22,7 @@ export default function Posts() {
       const { data, error, status } = await supabase
         .from('posts')
         .select(`id, title, content, poster_url, created_at`)
+        .order('created_at', { ascending: false })
 
       if (error && status !== 406) {
         console.log(error)
