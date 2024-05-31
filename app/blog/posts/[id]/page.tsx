@@ -9,9 +9,11 @@ export async function generateStaticParams() {
     .select(`id, title, content, poster_url, created_at`)
     .order('created_at', { ascending: false })
 
-  return data?.map((post) => ({
-    post: post.id,
-  }))
+  return (
+    data?.map((post) => ({
+      post: post.id,
+    })) || []
+  )
 }
 
 export default async function PostById({ params }: { params: { id: number } }) {
