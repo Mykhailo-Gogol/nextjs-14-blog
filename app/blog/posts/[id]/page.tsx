@@ -2,6 +2,8 @@ import { createClient } from '@/utils/supabase/client'
 import { createClient as createServerClient } from '@/utils/supabase/server'
 import Post from '../../post'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateStaticParams() {
   const supabase = createClient()
   const { data } = await supabase

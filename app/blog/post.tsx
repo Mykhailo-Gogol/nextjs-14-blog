@@ -44,8 +44,11 @@ export default function Post({
   }, [post?.poster_url, supabase])
 
   return (
-    <Link href={'/blog/posts/' + post?.id}>
-      <div className="card bg-base-100 shadow-xl">
+    <Link
+      href={'/blog/posts/' + post?.id}
+      className="hover:scale-110 transition-all"
+    >
+      <div className="card">
         <figure className="px-10 pt-10">
           {imageUrl ? (
             <Image
