@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import Image from 'next/image'
+import Loading from '@/components/Loading'
 
 export default function UploadImage({
   uid,
@@ -80,17 +81,23 @@ export default function UploadImage({
       <div className="flex justify-center mb-5">
         <div className="avatar">
           <div className="rounded">
-            <Image
-              width={size}
-              height={size}
-              src={
-                imageUrl ||
-                (storage === 'avatars' ? '/user.png' : '/upload_post_image.png')
-              }
-              alt="upload-image"
-              className="mb-5"
-              style={{ height: size, width: size }}
-            />
+            {storage === 'avatars' && !imageUrl ? (
+              <Loading size={size} />
+            ) : (
+              <Image
+                width={size}
+                height={size}
+                src={
+                  imageUrl ||
+                  (storage === 'avatars'
+                    ? '/user.png'
+                    : '/upload_post_image.png')
+                }
+                alt="upload-image"
+                className="mb-5"
+                style={{ height: size, width: size }}
+              />
+            )}
           </div>
         </div>
       </div>

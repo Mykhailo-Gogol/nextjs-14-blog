@@ -115,6 +115,7 @@ export default function ProfileForm({ user }: { user: User | null }) {
           type="text"
           value={username || '@'}
           onChange={(e) => setUsername(e.target.value)}
+          minLength={3}
         />
 
         <button

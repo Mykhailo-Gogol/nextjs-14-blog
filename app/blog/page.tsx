@@ -3,8 +3,8 @@ import Posts from './posts'
 
 export default function Blog() {
   return (
-    <div>
-      <div className="flex justify-center items-center p-5 min-h-screen">
+    <div className="min-h-screen">
+      <div className="flex justify-center items-center p-5 my-20">
         <div className="text-center md:w-1/2">
           <h1 className="text-xl font-bold mb-5">Blog</h1>
           <p>

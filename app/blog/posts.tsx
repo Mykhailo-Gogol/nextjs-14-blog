@@ -8,13 +8,14 @@ export default function Posts() {
   const supabase = createClient()
 
   const [allPosts, setAllPosts] = useState<
-    {
-      id: number
-      title: string
-      content: string
-      poster_url: string | null
-      created_at: Date
-    }[]
+    | {
+        id: number
+        title: string
+        content: string
+        poster_url: string | null
+        created_at: Date
+      }[]
+    | null
   >([])
 
   const getPosts = useCallback(async () => {
@@ -43,9 +44,7 @@ export default function Posts() {
   }, [supabase])
   return (
     <div className="grid md:grid-cols-3 gap-5 mb-40">
-      {allPosts.map((el) => (
-        <Post post={el} key={el.id} />
-      ))}
+      {allPosts?.map((el) => <Post post={el} key={el.id} />)}
     </div>
   )
 }

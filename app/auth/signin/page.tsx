@@ -28,14 +28,14 @@ export default function SignIn() {
           Sign in
         </button>
 
+        <GoogleSignIn />
+
         <Link
           href="/auth/signup"
           className="btn btn-ghost w-full mb-10 text-center"
         >
           Sign up
         </Link>
-
-        <GoogleSignIn />
       </form>
     </section>
   )
