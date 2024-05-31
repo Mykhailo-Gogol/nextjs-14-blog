@@ -20,11 +20,11 @@ export default function UploadImage({
   storage: 'avatars' | 'posters'
 }) {
   const supabase = createClient()
+
   const [imageUrl, setImageUrl] = useState<string | null>(url)
   const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
-    // avatarts, posts
     async function downloadImage(path: string) {
       try {
         const { data, error } = await supabase.storage
@@ -49,9 +49,9 @@ export default function UploadImage({
   const uploadAvatar: React.ChangeEventHandler<HTMLInputElement> = async (
     event
   ) => {
-    try {
-      setUploading(true)
+    setUploading(true)
 
+    try {
       if (!event.target.files || event.target.files.length === 0) {
         throw new Error('You must select an image to upload.')
       }
@@ -81,7 +81,7 @@ export default function UploadImage({
       <div className="flex justify-center mb-5">
         <div className="avatar">
           <div className="rounded">
-            {storage === 'avatars' && !imageUrl ? (
+            {(storage === 'avatars' && !imageUrl) || uploading ? (
               <Loading size={size} />
             ) : (
               <Image
@@ -90,8 +90,8 @@ export default function UploadImage({
                 src={
                   imageUrl ||
                   (storage === 'avatars'
-                    ? '/user.png'
-                    : '/upload_post_image.png')
+                    ? '/user_default.png'
+                    : '/post_default.png')
                 }
                 alt="upload-image"
                 className="mb-5"
@@ -107,10 +107,7 @@ export default function UploadImage({
           {uploading ? 'Uploading ...' : 'Upload'}
         </label>
         <input
-          style={{
-            visibility: 'hidden',
-            position: 'absolute',
-          }}
+          className="absolute hidden"
           type="file"
           id={storage}
           accept="image/*"

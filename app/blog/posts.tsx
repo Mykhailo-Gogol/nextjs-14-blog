@@ -1,50 +1,19 @@
-'use client'
-
-import { createClient } from '@/utils/supabase/client'
-import { useCallback, useEffect, useState } from 'react'
+import { createClient } from '@/utils/supabase/server'
 import Post from './post'
 
-export default function Posts() {
+export default async function Posts() {
   const supabase = createClient()
 
-  const [allPosts, setAllPosts] = useState<
-    | {
-        id: number
-        title: string
-        content: string
-        poster_url: string | null
-        created_at: Date
-      }[]
-    | null
-  >([])
+  const { data } = await supabase
+    .from('posts')
+    .select(
+      `id, title, content, poster_url, author_id, author_avatar_url, author_full_name, created_at`
+    )
+    .order('created_at', { ascending: false })
 
-  const getPosts = useCallback(async () => {
-    try {
-      const { data, error, status } = await supabase
-        .from('posts')
-        .select(`id, title, content, poster_url, created_at`)
-        .order('created_at', { ascending: false })
-
-      if (error && status !== 406) {
-        console.log(error)
-        throw error
-      }
-
-      if (data) {
-        setAllPosts(data)
-      }
-    } catch (error) {
-      alert('Error loading user data!')
-      console.log(error)
-    }
-  }, [supabase])
-
-  useEffect(() => {
-    getPosts()
-  }, [supabase])
   return (
-    <div className="grid md:grid-cols-3 gap-5 mb-40">
-      {allPosts?.map((el) => <Post post={el} key={el.id} />)}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-40">
+      {data?.map((el) => <Post post={el} key={el.id} />)}
     </div>
   )
 }

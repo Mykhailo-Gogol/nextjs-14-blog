@@ -4,11 +4,18 @@ import { useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { type User } from '@supabase/supabase-js'
 import UploadImage from './upload-image'
+import { useRouter } from 'next/navigation'
 
-export default function CreateForm({ user }: { user: User | null }) {
-  console.log('env', process.env.NODE_ENV)
-
+export default function CreateForm({
+  user,
+  profile,
+}: {
+  user: User | null
+  profile: { full_name: string | null; avatar_url: string | null } | null
+}) {
+  const router = useRouter()
   const supabase = createClient()
+
   const [loading, setLoading] = useState(false)
   const [title, setTitle] = useState<string | null>(null)
   const [content, setContent] = useState<string | null>(null)
@@ -30,6 +37,8 @@ export default function CreateForm({ user }: { user: User | null }) {
         title,
         content,
         author_id: user?.id as string,
+        author_avatar_url: profile?.avatar_url,
+        author_full_name: profile?.full_name,
         poster_url,
       })
 
@@ -67,6 +76,8 @@ export default function CreateForm({ user }: { user: User | null }) {
               content,
               poster_url: posterURL,
             })
+
+            router.push('/blog')
           }}
         >
           <input

@@ -7,6 +7,7 @@ import UploadImage from './upload-image'
 
 export default function ProfileForm({ user }: { user: User | null }) {
   const supabase = createClient()
+
   const [loading, setLoading] = useState(true)
   const [fullname, setFullname] = useState<string | null>(null)
   const [username, setUsername] = useState<string | null>(null)
