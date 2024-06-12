@@ -9,16 +9,10 @@ export default async function Profile() {
     data: { user },
   } = await supabase.auth.getUser()
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select(`full_name, avatar_url`)
-    .eq('id', user?.id)
-    .single()
-
   return (
     <div className="grid md:grid-cols-2 items-start md:min-h-full pt-20 flex-col-reverse min-h-screen">
       <ProfileForm user={user} />
-      <CreateForm user={user} profile={profile} />
+      <CreateForm user={user} />
     </div>
   )
 }

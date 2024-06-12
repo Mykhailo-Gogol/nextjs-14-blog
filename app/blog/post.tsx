@@ -4,21 +4,24 @@ import Loading from '@/components/Loading'
 import { createClient } from '@/utils/supabase/client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 export default function Post({
   post,
   page,
 }: {
   post: {
-    id: number
-    title: string
-    content: string
-    poster_url: string | null
-    author_id: string | null
-    author_avatar_url: string | null
-    author_full_name: string | null
-    created_at: Date
+    id: any
+    title: any
+    content: any
+    poster_url: any
+    author_id: any
+    created_at: any
+    profiles: {
+      id: any
+      full_name: any
+      avatar_url: any
+    }[]
   } | null
   page?: boolean
 }) {
@@ -49,13 +52,18 @@ export default function Post({
     }
   }
 
+  const profile = useMemo(
+    () => (Array.isArray(post?.profiles) ? post?.profiles[0] : post?.profiles),
+    [post?.id]
+  )
+
   useEffect(() => {
     if (post?.poster_url) {
       downloadImage(post.poster_url, 'posters')
     }
 
-    if (post?.author_avatar_url) {
-      downloadImage(post.author_avatar_url, 'avatars')
+    if (profile?.avatar_url) {
+      downloadImage(profile.avatar_url, 'avatars')
     }
   }, [post?.id, supabase])
 
@@ -80,20 +88,22 @@ export default function Post({
           )}
         </figure>
         <div className="card-body items-center text-center">
-          <div className="flex items-center mb-5">
-            {posterUrl ? (
-              <Image
-                src={avatarUrl || '/user_default.png'}
-                alt={post?.author_avatar_url || ''}
-                width={40}
-                height={40}
-                className="rounded-full overflow-hidden w-10 h-10 object-center object-cover"
-              />
-            ) : (
-              <Loading size={40} />
-            )}
-            <span className="px-5">{post?.author_full_name}</span>
-          </div>
+          {profile && (
+            <div className="flex items-center mb-5">
+              {posterUrl ? (
+                <Image
+                  src={avatarUrl || '/user_default.png'}
+                  alt={profile.avatar_url || ''}
+                  width={40}
+                  height={40}
+                  className="rounded-full overflow-hidden w-10 h-10 object-center object-cover"
+                />
+              ) : (
+                <Loading size={40} />
+              )}
+              <span className="px-5">{profile.full_name}</span>
+            </div>
+          )}
           <h2 className="card-title">{post?.title}</h2>
           {post?.created_at && page && (
             <span className="text-xs">

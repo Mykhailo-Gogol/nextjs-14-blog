@@ -6,13 +6,7 @@ import { type User } from '@supabase/supabase-js'
 import UploadImage from './upload-image'
 import { useRouter } from 'next/navigation'
 
-export default function CreateForm({
-  user,
-  profile,
-}: {
-  user: User | null
-  profile: { full_name: string | null; avatar_url: string | null } | null
-}) {
+export default function CreateForm({ user }: { user: User | null }) {
   const router = useRouter()
   const supabase = createClient()
 
@@ -37,8 +31,6 @@ export default function CreateForm({
         title,
         content,
         author_id: user?.id as string,
-        author_avatar_url: profile?.avatar_url,
-        author_full_name: profile?.full_name,
         poster_url,
       })
 

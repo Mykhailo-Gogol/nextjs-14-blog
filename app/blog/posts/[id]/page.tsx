@@ -21,7 +21,7 @@ export default async function PostById({ params }: { params: { id: number } }) {
   const { data } = await supabase
     .from('posts')
     .select(
-      `id, title, content, poster_url, author_id, author_avatar_url, author_full_name, created_at`
+      `id, title, content, poster_url, author_id, created_at, profiles ( id, full_name, avatar_url )`
     )
     .eq('id', params.id)
     .single()
