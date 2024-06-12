@@ -36,10 +36,17 @@ export default function CreateForm({ user }: { user: User | null }) {
 
       if (error) throw error
 
-      alert('Succeslfully created!')
-      setTitle(null)
-      setContent(null)
-      setPosterUrl(null)
+      if (!poster_url) {
+        alert('Poster image is required!')
+      } else {
+        alert('Succeslfully created!')
+
+        setTitle(null)
+        setContent(null)
+        setPosterUrl(null)
+
+        router.push('/blog')
+      }
     } catch (error) {
       alert('Something went wrong!')
     } finally {
@@ -68,8 +75,6 @@ export default function CreateForm({ user }: { user: User | null }) {
               content,
               poster_url: posterURL,
             })
-
-            router.push('/blog')
           }}
         >
           <input

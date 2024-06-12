@@ -75,7 +75,7 @@ export default function PostDetails({
         <div className="card-body items-center text-center">
           {profile && (
             <div className="flex items-center mb-5">
-              {posterUrl ? (
+              {avatarUrl ? (
                 <Image
                   src={avatarUrl || '/user_default.png'}
                   alt={profile.avatar_url || ''}
@@ -100,7 +100,7 @@ export default function PostDetails({
               {String(new Date(post?.created_at).toDateString())}
             </span>
           )}
-          <p className={'w-full py-5 md:w-2/3 text-left'}>{post?.content}</p>
+          <p className="w-full py-5 md:w-2/3 text-left">{post?.content}</p>
         </div>
       </div>
     </section>

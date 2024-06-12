@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import Posts from './posts'
 
 export default function Blog() {
@@ -15,9 +15,8 @@ export default function Blog() {
           </p>
         </div>
       </div>
-      <Suspense>
-        <Posts />
-      </Suspense>
+
+      <Posts />
     </div>
   )
 }
