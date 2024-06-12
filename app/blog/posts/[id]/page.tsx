@@ -25,7 +25,7 @@ export default async function PostById({ params }: { params: { id: number } }) {
     .single()
 
   return (
-    <div>
+    <div className="my-10">
       <PostDetails post={data} page />
     </div>
   )

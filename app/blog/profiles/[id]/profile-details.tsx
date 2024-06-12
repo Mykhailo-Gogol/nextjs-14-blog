@@ -40,7 +40,7 @@ export default function ProfileImage({
   }, [profile?.avatar_url, supabase])
 
   return (
-    <div className="w-full flex flex-col items-center mb-5 pt-5">
+    <div className="w-full flex flex-col items-center mb-5">
       <div className="avatar mb-5">
         <div className="rounded">
           {!avatarUrl ? (

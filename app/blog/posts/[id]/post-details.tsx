@@ -58,7 +58,7 @@ export default function PostDetails({
   return (
     <section>
       <div className="card">
-        <figure className="px-5 pt-5">
+        <figure className="px-5">
           {posterUrl ? (
             <Image
               src={posterUrl || '/post_default.png'}

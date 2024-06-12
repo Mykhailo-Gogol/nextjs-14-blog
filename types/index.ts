@@ -19,5 +19,5 @@ export type PostWithProfile = PostType & {
 }
 
 export type ProfileWithPosts = ProfileType & {
-  posts: PostType | PostType[]
+  posts: PostType[]
 }

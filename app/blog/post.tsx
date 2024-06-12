@@ -62,10 +62,10 @@ export default function Post({
   return (
     <Link
       href={'/blog/posts/' + post?.id}
-      className="hover:scale-110 transition-all"
+      className="hover:scale-105 transition-all"
     >
       <div className="card">
-        <figure className="px-5 pt-5">
+        <figure className="px-5">
           {posterUrl ? (
             <Image
               src={posterUrl || '/post_default.png'}

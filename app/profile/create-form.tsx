@@ -85,11 +85,11 @@ export default function CreateForm({ user }: { user: User | null }) {
           <textarea
             required
             id="content"
-            className="textarea textarea-accent w-full h-60"
+            className="block textarea textarea-primary w-full h-60 mb-5"
             placeholder="..."
             value={content || ''}
             onChange={(e) => setContent(e.target.value)}
-          ></textarea>
+          />
 
           <button className="btn mb-5 w-full" disabled={loading} type="submit">
             {loading ? 'Uploading ...' : 'Post'}

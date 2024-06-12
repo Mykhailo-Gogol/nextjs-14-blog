@@ -1,7 +1,7 @@
 import { createClient } from '@/utils/supabase/client'
 import { createClient as createServerClient } from '@/utils/supabase/server'
 import Post from '../../post'
-import { PostType } from '@/types'
+import { PostType, ProfileWithPosts } from '@/types'
 import ProfileDetails from './profile-details'
 
 export const dynamic = 'force-dynamic'
@@ -31,11 +31,14 @@ export default async function ProfileById({
     .single()
 
   return (
-    <div>
+    <div className="my-10">
       <ProfileDetails profile={data} size={250} />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-40">
-        {data.posts?.map((el: PostType) => <Post post={el} key={el.id} />)}
+      <h1 className="text-center text-2xl my-5">Posts</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {(data as ProfileWithPosts).posts?.map((el: PostType) => (
+          <Post post={el} key={el.id} />
+        ))}
       </div>
     </div>
   )
