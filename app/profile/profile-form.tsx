@@ -19,7 +19,7 @@ export default function ProfileForm({ user }: { user: User | null }) {
 
       const { data, error, status } = await supabase
         .from('profiles')
-        .select(`full_name, username, avatar_url`)
+        .select('*')
         .eq('id', user?.id)
         .maybeSingle()
 

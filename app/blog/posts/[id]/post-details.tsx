@@ -1,20 +1,16 @@
 'use client'
 
 import Loading from '@/components/Loading'
-import { PostType, ProfileType } from '@/types'
+import { PostWithProfile } from '@/types'
 import { createClient } from '@/utils/supabase/client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 
-export default function Post({
+export default function PostDetails({
   post,
 }: {
-  post:
-    | (PostType & {
-        profiles?: ProfileType[]
-      })
-    | null
+  post: PostWithProfile | null
   page?: boolean
 }) {
   const supabase = createClient()
@@ -60,10 +56,7 @@ export default function Post({
   }, [post?.id, supabase])
 
   return (
-    <Link
-      href={'/blog/posts/' + post?.id}
-      className="hover:scale-110 transition-all"
-    >
+    <section>
       <div className="card">
         <figure className="px-5 pt-5">
           {posterUrl ? (
@@ -102,9 +95,14 @@ export default function Post({
             </div>
           )}
           <h2 className="card-title">{post?.title}</h2>
-          <p className={'w-full py-5 truncate'}>{post?.content}</p>
+          {post?.created_at && (
+            <span className="text-xs">
+              {String(new Date(post?.created_at).toDateString())}
+            </span>
+          )}
+          <p className={'w-full py-5 md:w-2/3 text-left'}>{post?.content}</p>
         </div>
       </div>
-    </Link>
+    </section>
   )
 }
