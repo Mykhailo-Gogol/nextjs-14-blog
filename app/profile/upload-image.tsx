@@ -21,11 +21,13 @@ export default function UploadImage({
 }) {
   const supabase = createClient()
 
+  const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState<string | null>(url)
   const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
     async function downloadImage(path: string) {
+      setLoading(true)
       try {
         const { data, error } = await supabase.storage
           .from(storage)
@@ -38,6 +40,8 @@ export default function UploadImage({
         setImageUrl(url)
       } catch (error) {
         console.log('Error downloading image: ', error)
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -81,7 +85,7 @@ export default function UploadImage({
       <div className="flex justify-center mb-5">
         <div className="avatar">
           <div className="rounded">
-            {(storage === 'avatars' && !imageUrl) || uploading ? (
+            {storage === 'avatars' && (loading || uploading) ? (
               <Loading size={size} />
             ) : (
               <Image

@@ -5,18 +5,19 @@ import { PostType, ProfileType } from '@/types'
 import { createClient } from '@/utils/supabase/client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
-export default function Post({
-  post,
-}: {
+interface iProps {
   post:
     | (PostType & {
         profiles?: ProfileType[]
       })
     | null
-  page?: boolean
-}) {
+}
+
+export default function Post({ post }: iProps) {
+  const router = useRouter()
   const supabase = createClient()
 
   const [posterUrl, setPosterUrl] = useState<string | null>(null)
@@ -60,9 +61,9 @@ export default function Post({
   }, [post?.id, supabase])
 
   return (
-    <Link
-      href={'/blog/posts/' + post?.id}
+    <button
       className="hover:scale-105 transition-all"
+      onClick={() => router.push('/blog/posts/' + post?.id)}
     >
       <div className="card">
         <figure className="px-5">
@@ -72,7 +73,7 @@ export default function Post({
               alt={post?.title || 'poster'}
               width={300}
               height={300}
-              className="rounded-xl h-60 object-cover"
+              className={`rounded-xl h-60 ${posterUrl ? 'object-cover' : 'object-contain'}`}
               loading="lazy"
             />
           ) : (
@@ -105,6 +106,6 @@ export default function Post({
           <p className={'w-full py-5 truncate'}>{post?.content}</p>
         </div>
       </div>
-    </Link>
+    </button>
   )
 }

@@ -15,9 +15,11 @@ export default function ProfileImage({
 }) {
   const supabase = createClient()
 
+  const [loading, setLoading] = useState(false)
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
 
   async function downloadImage(path: string) {
+    setLoading(true)
     try {
       const { data, error } = await supabase.storage
         .from('avatars')
@@ -31,6 +33,8 @@ export default function ProfileImage({
       setAvatarUrl(url)
     } catch (error) {
       console.log('Error downloading image: ', error)
+    } finally {
+      setLoading(false)
     }
   }
   useEffect(() => {
@@ -43,7 +47,7 @@ export default function ProfileImage({
     <div className="w-full flex flex-col items-center mb-5">
       <div className="avatar mb-5">
         <div className="rounded">
-          {!avatarUrl ? (
+          {loading ? (
             <Loading size={size} />
           ) : (
             <Image

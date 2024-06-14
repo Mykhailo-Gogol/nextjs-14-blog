@@ -11,7 +11,6 @@ export default function PostDetails({
   post,
 }: {
   post: PostWithProfile | null
-  page?: boolean
 }) {
   const supabase = createClient()
 
@@ -65,7 +64,7 @@ export default function PostDetails({
               alt={post?.title || 'poster'}
               width={300}
               height={300}
-              className="rounded-xl h-60 object-cover"
+              className={`rounded-xl h-60 ${posterUrl ? 'object-cover' : 'object-contain'}`}
               loading="lazy"
             />
           ) : (
