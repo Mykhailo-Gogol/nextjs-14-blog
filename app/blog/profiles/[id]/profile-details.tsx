@@ -32,7 +32,7 @@ export default function ProfileImage({
 
       setAvatarUrl(url)
     } catch (error) {
-      console.log('Error downloading image: ', error)
+      console.error('Error downloading image: ', error)
     } finally {
       setLoading(false)
     }

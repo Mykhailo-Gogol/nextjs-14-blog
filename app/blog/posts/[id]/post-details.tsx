@@ -35,7 +35,7 @@ export default function PostDetails({
           break
       }
     } catch (error) {
-      console.log('Error downloading image: ', error)
+      console.error('Error downloading image: ', error)
     }
   }
 

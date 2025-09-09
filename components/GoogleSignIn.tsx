@@ -14,15 +14,10 @@ export default function GoogleSignIn() {
 
   const handleGoogleSignIn = async () => {
     const data = await supabase.auth
-      .signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo,
-        },
-      })
+      .signInWithOAuth({ provider: 'google', options: { redirectTo } })
       .then()
 
-    console.log(data)
+    console.debug(data)
   }
   return (
     <button

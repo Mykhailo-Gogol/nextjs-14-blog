@@ -10,9 +10,9 @@ export default async function Profile() {
   } = await supabase.auth.getUser()
 
   return (
-    <div className="grid md:grid-cols-2 items-start md:min-h-full flex-col-reverse min-h-screen my-10">
-      <ProfileForm user={user} />
+    <div className="grid gap-10 md:grid-cols-2 items-start md:min-h-full flex-col-reverse min-h-screen my-10">
       <CreateForm user={user} />
+      <ProfileForm user={user} />
     </div>
   )
 }

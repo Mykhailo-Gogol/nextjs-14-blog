@@ -5,19 +5,19 @@ import { createClient } from '@/utils/supabase/client'
 import Image from 'next/image'
 import Loading from '@/components/Loading'
 
-export default function UploadImage({
+export default function UploadPoster({
+  title,
   uid,
   url,
   size,
   onUpload,
-  storage,
 }: {
+  title: string
   uid: string | null
   url: string | null
   size: number
   // eslint-disable-next-line no-unused-vars
   onUpload: (url: string) => void
-  storage: 'avatars' | 'posters'
 }) {
   const supabase = createClient()
 
@@ -30,7 +30,7 @@ export default function UploadImage({
       setLoading(true)
       try {
         const { data, error } = await supabase.storage
-          .from(storage)
+          .from('posters')
           .download(path)
         if (error) {
           throw error
@@ -39,7 +39,7 @@ export default function UploadImage({
         const url = URL.createObjectURL(data)
         setImageUrl(url)
       } catch (error) {
-        console.log('Error downloading image: ', error)
+        console.error('Error downloading image: ', error)
       } finally {
         setLoading(false)
       }
@@ -50,7 +50,7 @@ export default function UploadImage({
     } else setImageUrl(null)
   }, [url, supabase])
 
-  const uploadAvatar: React.ChangeEventHandler<HTMLInputElement> = async (
+  const uploadPoster: React.ChangeEventHandler<HTMLInputElement> = async (
     event
   ) => {
     setUploading(true)
@@ -62,10 +62,13 @@ export default function UploadImage({
 
       const file = event.target.files[0]
       const fileExt = file.name.split('.').pop()
-      const filePath = `${storage}-${uid}-${Math.random()}.${fileExt}`
+
+      const fileName = title.split(/[^a-zA-Z0-9]+/gi).join('-')
+
+      const filePath = `${uid}/${fileName || 'poster'}-${Date.now()}.${fileExt}`
 
       const { error: uploadError } = await supabase.storage
-        .from(storage)
+        .from('posters')
         .upload(filePath, file)
 
       if (uploadError) {
@@ -74,6 +77,7 @@ export default function UploadImage({
 
       onUpload(filePath)
     } catch (error) {
+      console.log(error)
       alert('Error uploading image!')
     } finally {
       setUploading(false)
@@ -82,40 +86,33 @@ export default function UploadImage({
 
   return (
     <div>
-      <div className="flex justify-center mb-5">
-        <div className="avatar">
-          <div className="rounded">
-            {storage === 'avatars' && (loading || uploading) ? (
-              <Loading size={size} />
-            ) : (
-              <Image
-                width={size}
-                height={size}
-                src={
-                  imageUrl ||
-                  (storage === 'avatars'
-                    ? '/user_default.png'
-                    : '/post_default.png')
-                }
-                alt="upload-image"
-                className="mb-5"
-                style={{ height: size, width: size }}
-              />
-            )}
-          </div>
+      <div className="flex justify-center">
+        <div className="rounded">
+          {loading || uploading ? (
+            <Loading size={size} />
+          ) : (
+            <Image
+              width={size}
+              height={size}
+              className="mb-5"
+              src={imageUrl || '/post_default.png'}
+              alt="upload-image"
+              style={{ height: size, width: size }}
+            />
+          )}
         </div>
       </div>
 
-      <div className="mb-5">
-        <label className="btn btn-primary w-full" htmlFor={storage}>
+      <div>
+        <label className="btn btn-primary w-full" htmlFor={'posters'}>
           {uploading ? 'Uploading ...' : 'Upload'}
         </label>
         <input
           className="absolute hidden"
           type="file"
-          id={storage}
+          id={'posters'}
           accept="image/*"
-          onChange={uploadAvatar}
+          onChange={uploadPoster}
           disabled={uploading}
         />
       </div>

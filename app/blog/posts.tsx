@@ -12,7 +12,9 @@ export default async function Posts() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      {data?.map((el: PostType) => <Post post={el} key={el.id} />)}
+      {data?.map((el: PostType) => (
+        <Post post={el} key={el.id} />
+      ))}
     </div>
   )
 }

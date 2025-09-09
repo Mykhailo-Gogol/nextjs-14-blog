@@ -12,6 +12,7 @@ export type ProfileType = {
   full_name: string
   avatar_url: string | null
   username: string | null
+  updated_at?: string
 }
 
 export type PostWithProfile = PostType & {

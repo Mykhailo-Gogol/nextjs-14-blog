@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { type User } from '@supabase/supabase-js'
-import UploadImage from './upload-image'
+import UploadPoster from './upload-poster'
 import { useRouter } from 'next/navigation'
 
 export default function CreateForm({ user }: { user: User | null }) {
@@ -11,8 +11,8 @@ export default function CreateForm({ user }: { user: User | null }) {
   const supabase = createClient()
 
   const [loading, setLoading] = useState(false)
-  const [title, setTitle] = useState<string | null>(null)
-  const [content, setContent] = useState<string | null>(null)
+  const [title, setTitle] = useState<string>('')
+  const [content, setContent] = useState<string | null>('')
   const [posterURL, setPosterUrl] = useState<string | null>(null)
 
   async function createPost({
@@ -20,7 +20,7 @@ export default function CreateForm({ user }: { user: User | null }) {
     content,
     poster_url,
   }: {
-    title: string | null
+    title: string
     content: string | null
     poster_url: string | null
   }) {
@@ -32,6 +32,7 @@ export default function CreateForm({ user }: { user: User | null }) {
         content,
         author_id: user?.id as string,
         poster_url,
+        created_at: new Date().toISOString(),
       })
 
       if (error) throw error
@@ -39,13 +40,17 @@ export default function CreateForm({ user }: { user: User | null }) {
       if (!poster_url) {
         alert('Poster image is required!')
       } else {
-        alert('Succeslfully created!')
+        if (!title || !content) {
+          alert('All fields are required!')
+        } else {
+          alert('Succeslfully created!')
 
-        setTitle(null)
-        setContent(null)
-        setPosterUrl(null)
+          setTitle('')
+          setContent('')
+          setPosterUrl(null)
 
-        router.push('/blog')
+          router.push('/blog')
+        }
       }
     } catch (error) {
       alert('Something went wrong!')
@@ -55,18 +60,19 @@ export default function CreateForm({ user }: { user: User | null }) {
   }
 
   return (
-    <section className="w-full p-5 min-h-screen flex-col">
-      <div>
-        <UploadImage
+    <section className="w-full p-5 md:min-h-screen flex-col">
+      <div className="grid gap-5">
+        <UploadPoster
+          title={title}
           uid={user?.id ?? null}
           url={posterURL}
           size={150}
           onUpload={(url) => {
             setPosterUrl(url)
           }}
-          storage="posters"
         />
         <form
+          className="grid gap-5"
           onSubmit={(e) => {
             e.preventDefault()
 
@@ -78,7 +84,7 @@ export default function CreateForm({ user }: { user: User | null }) {
           }}
         >
           <input
-            className="input input-bordered w-full mb-5"
+            className="input input-bordered w-full"
             required
             id="title"
             placeholder="Post Title"
@@ -90,13 +96,13 @@ export default function CreateForm({ user }: { user: User | null }) {
           <textarea
             required
             id="content"
-            className="block textarea textarea-primary w-full h-60 mb-5"
+            className="block textarea textarea-primary w-full h-60"
             placeholder="..."
             value={content || ''}
             onChange={(e) => setContent(e.target.value)}
           />
 
-          <button className="btn mb-5 w-full" disabled={loading} type="submit">
+          <button className="btn w-full" disabled={loading} type="submit">
             {loading ? 'Uploading ...' : 'Post'}
           </button>
         </form>

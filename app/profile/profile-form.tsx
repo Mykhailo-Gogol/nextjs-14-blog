@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { type User } from '@supabase/supabase-js'
-import UploadImage from './upload-image'
+import UploadAvatar from './upload-avatar'
 
 export default function ProfileForm({ user }: { user: User | null }) {
   const supabase = createClient()
@@ -24,7 +24,7 @@ export default function ProfileForm({ user }: { user: User | null }) {
         .maybeSingle()
 
       if (error && status !== 406) {
-        console.log(error)
+        console.error(error, status)
         throw error
       }
 
@@ -35,7 +35,7 @@ export default function ProfileForm({ user }: { user: User | null }) {
       }
     } catch (error) {
       alert('Error loading user data!')
-      console.log(error)
+      console.error(error)
     } finally {
       setLoading(false)
     }
@@ -76,24 +76,19 @@ export default function ProfileForm({ user }: { user: User | null }) {
   }
 
   return (
-    <section className="w-full p-5 min-h-screen flex-col">
-      <div>
-        <UploadImage
+    <section className="w-full p-5 md:min-h-screen ">
+      <div className="grid gap-5">
+        <UploadAvatar
           uid={user?.id ?? null}
           url={avatarUrl}
           size={150}
           onUpload={(url) => {
             setAvatarUrl(url)
-            updateProfile({
-              fullname,
-              username,
-              avatar_url: url,
-            })
+            updateProfile({ fullname, username, avatar_url: url })
           }}
-          storage="avatars"
         />
         <input
-          className="input input-bordered w-full mb-5"
+          className="input input-bordered w-full"
           id="email"
           type="text"
           value={user?.email}
@@ -101,7 +96,7 @@ export default function ProfileForm({ user }: { user: User | null }) {
         />
 
         <input
-          className="input input-bordered w-full mb-5"
+          className="input input-bordered w-full"
           id="fullName"
           placeholder="full name"
           type="text"
@@ -110,7 +105,7 @@ export default function ProfileForm({ user }: { user: User | null }) {
         />
 
         <input
-          className="input input-bordered w-full mb-5"
+          className="input input-bordered w-full"
           id="username"
           placeholder="username"
           type="text"
@@ -120,13 +115,9 @@ export default function ProfileForm({ user }: { user: User | null }) {
         />
 
         <button
-          className="btn mb-5 w-full"
+          className="btn w-full"
           onClick={() =>
-            updateProfile({
-              fullname,
-              username,
-              avatar_url: avatarUrl,
-            })
+            updateProfile({ fullname, username, avatar_url: avatarUrl })
           }
           disabled={loading}
         >

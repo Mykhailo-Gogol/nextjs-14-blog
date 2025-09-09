@@ -8,14 +8,17 @@
     "start": "next start",
     "lint": "eslint . && next lint --fix",
     "lint-ts": "tsc",
-    "lint-prettier": "prettier ./app --check"
+    "lint-prettier": "prettier ./app --check",
+    "qc": "yarn lint && yarn lint-ts && yarn lint-prettier"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.0.1",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@supabase/ssr": "^0.3.0",
+    "@supabase/supabase-js": "^2.57.2",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",

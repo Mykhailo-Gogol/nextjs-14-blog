@@ -9,11 +9,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
 interface iProps {
-  post:
-    | (PostType & {
-        profiles?: ProfileType[]
-      })
-    | null
+  post: (PostType & { profiles?: ProfileType[] }) | null
 }
 
 export default function Post({ post }: iProps) {
@@ -41,7 +37,7 @@ export default function Post({ post }: iProps) {
           break
       }
     } catch (error) {
-      console.log('Error downloading image: ', error)
+      console.error('Error downloading image: ', error)
     }
   }
 
@@ -83,7 +79,7 @@ export default function Post({ post }: iProps) {
         <div className="card-body items-center text-center">
           {profile && (
             <div className="flex items-center mb-5">
-              {posterUrl ? (
+              {avatarUrl ? (
                 <Image
                   src={avatarUrl || '/user_default.png'}
                   alt={profile.avatar_url || ''}
