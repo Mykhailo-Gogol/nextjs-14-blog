@@ -9,8 +9,8 @@ export default function ProfileForm({ user }: { user: User | null }) {
   const supabase = createClient()
 
   const [loading, setLoading] = useState(true)
-  const [fullname, setFullname] = useState<string | null>(null)
-  const [username, setUsername] = useState<string | null>(null)
+  const [fullname, setFullname] = useState<string>('')
+  const [username, setUsername] = useState<string>('')
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
 
   const getProfile = useCallback(async () => {
@@ -34,7 +34,6 @@ export default function ProfileForm({ user }: { user: User | null }) {
         setAvatarUrl(data.avatar_url)
       }
     } catch (error) {
-      alert('Error loading user data!')
       console.error(error)
     } finally {
       setLoading(false)
@@ -66,10 +65,8 @@ export default function ProfileForm({ user }: { user: User | null }) {
       })
 
       if (error) throw error
-
-      alert('Profile updated!')
     } catch (error) {
-      alert('Error updating the data!')
+      console.error(error)
     } finally {
       setLoading(false)
     }
@@ -87,42 +84,47 @@ export default function ProfileForm({ user }: { user: User | null }) {
             updateProfile({ fullname, username, avatar_url: url })
           }}
         />
-        <input
-          className="input input-bordered w-full"
-          id="email"
-          type="text"
-          value={user?.email}
-          disabled
-        />
-
-        <input
-          className="input input-bordered w-full"
-          id="fullName"
-          placeholder="full name"
-          type="text"
-          value={fullname || ''}
-          onChange={(e) => setFullname(e.target.value)}
-        />
-
-        <input
-          className="input input-bordered w-full"
-          id="username"
-          placeholder="username"
-          type="text"
-          value={username || '@'}
-          onChange={(e) => setUsername(e.target.value)}
-          minLength={3}
-        />
-
-        <button
-          className="btn w-full"
-          onClick={() =>
+        <form
+          className="grid gap-5"
+          onSubmit={(e) => {
+            e.preventDefault()
             updateProfile({ fullname, username, avatar_url: avatarUrl })
-          }
-          disabled={loading}
+          }}
         >
-          {loading ? 'Loading ...' : 'Update'}
-        </button>
+          <input
+            className="input input-bordered w-full"
+            id="email"
+            type="text"
+            value={user?.email}
+            disabled
+          />
+
+          <input
+            className="input input-bordered w-full"
+            id="fullName"
+            placeholder="full name"
+            type="text"
+            required
+            value={fullname}
+            onChange={(e) => setFullname(e.target.value)}
+          />
+
+          <input
+            className="input input-bordered w-full"
+            id="username"
+            placeholder="username"
+            type="text"
+            required
+            prefix="@"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            minLength={3}
+          />
+
+          <button type="submit" className="btn w-full" disabled={loading}>
+            {loading ? 'Loading ...' : 'Update'}
+          </button>
+        </form>
 
         <form action="/auth/signout" method="post">
           <button className="btn btn-error w-full" type="submit">

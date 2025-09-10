@@ -78,7 +78,6 @@ export default function UploadPoster({
       onUpload(filePath)
     } catch (error) {
       console.log(error)
-      alert('Error uploading image!')
     } finally {
       setUploading(false)
     }

@@ -12,7 +12,7 @@ export default function CreateForm({ user }: { user: User | null }) {
 
   const [loading, setLoading] = useState(false)
   const [title, setTitle] = useState<string>('')
-  const [content, setContent] = useState<string | null>('')
+  const [content, setContent] = useState<string>('')
   const [posterURL, setPosterUrl] = useState<string | null>(null)
 
   async function createPost({
@@ -38,13 +38,9 @@ export default function CreateForm({ user }: { user: User | null }) {
       if (error) throw error
 
       if (!poster_url) {
-        alert('Poster image is required!')
       } else {
         if (!title || !content) {
-          alert('All fields are required!')
         } else {
-          alert('Succeslfully created!')
-
           setTitle('')
           setContent('')
           setPosterUrl(null)
@@ -53,7 +49,7 @@ export default function CreateForm({ user }: { user: User | null }) {
         }
       }
     } catch (error) {
-      alert('Something went wrong!')
+      console.error(error)
     } finally {
       setLoading(false)
     }
@@ -89,7 +85,7 @@ export default function CreateForm({ user }: { user: User | null }) {
             id="title"
             placeholder="Post Title"
             type="text"
-            value={title || ''}
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
 
@@ -98,7 +94,7 @@ export default function CreateForm({ user }: { user: User | null }) {
             id="content"
             className="block textarea textarea-primary w-full h-60"
             placeholder="..."
-            value={content || ''}
+            value={content}
             onChange={(e) => setContent(e.target.value)}
           />
 

@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description: 'Blog | This page has a description',
   applicationName: 'Bbbbblog',
   keywords: ['blog, nextjs'],
+  icons: [{ rel: 'icon', type: 'image/png', url: '/favicon.png' }],
 }
 
 export default function RootLayout({

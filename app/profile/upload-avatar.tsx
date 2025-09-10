@@ -62,8 +62,6 @@ export default function UploadAvatar({
       const fileExt = file.name.split('.').pop()
       const filePath = `${uid}/${uid}-${Date.now()}.${fileExt}`
 
-      console.log(fileExt, filePath)
-
       const { error: uploadError } = await supabase.storage
         .from('avatars')
         .upload(filePath, file)
@@ -75,7 +73,6 @@ export default function UploadAvatar({
       onUpload(filePath)
     } catch (error) {
       console.log(error)
-      alert('Error uploading image!')
     } finally {
       setUploading(false)
     }

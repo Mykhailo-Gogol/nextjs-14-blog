@@ -14,7 +14,7 @@ export default async function Header() {
     <header className="navbar bg-base-100 shadow-lg sticky top-0 z-10">
       <div className="flex-1">
         <Link href="/" className="btn btn-primary text-xl py-2">
-          <Image src="/favlogo.png" alt="logo" width={30} height={30} />
+          <Image src="/favicon.png" alt="logo" width={30} height={30} />
         </Link>
       </div>
       <nav className="menu menu-horizontal px-1">

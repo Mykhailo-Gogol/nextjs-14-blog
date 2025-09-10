@@ -57,11 +57,8 @@ export default function Post({ post }: iProps) {
   }, [post?.id, supabase])
 
   return (
-    <button
-      className="hover:scale-105 transition-all"
-      onClick={() => router.push('/blog/posts/' + post?.id)}
-    >
-      <div className="card">
+    <div className="card hover:scale-105 transition-all">
+      <button onClick={() => router.push('/blog/posts/' + post?.id)}>
         <figure className="px-5">
           {posterUrl ? (
             <Image
@@ -69,39 +66,49 @@ export default function Post({ post }: iProps) {
               alt={post?.title || 'poster'}
               width={300}
               height={300}
-              className={`rounded-xl h-60 ${posterUrl ? 'object-cover' : 'object-contain'}`}
+              className={`rounded-xl h-60 object-contain`}
               loading="lazy"
             />
           ) : (
             <Loading size={240} />
           )}
         </figure>
-        <div className="card-body items-center text-center">
-          {profile && (
-            <div className="flex items-center mb-5">
-              {avatarUrl ? (
-                <Image
-                  src={avatarUrl || '/user_default.png'}
-                  alt={profile.avatar_url || ''}
-                  width={40}
-                  height={40}
-                  className="rounded-full overflow-hidden w-10 h-10 object-center object-cover"
-                />
-              ) : (
-                <Loading size={40} />
-              )}
-              <Link
-                href={'/blog/profiles/' + profile.id}
-                className="px-5 hover:underline"
-              >
-                {profile.full_name}
-              </Link>
-            </div>
-          )}
-          <h2 className="card-title">{post?.title}</h2>
-          <p className={'w-full py-5 truncate'}>{post?.content}</p>
-        </div>
+      </button>
+      <div className="card-body items-center text-center">
+        {profile && (
+          <div className="flex items-center mb-5">
+            {avatarUrl ? (
+              <Image
+                src={avatarUrl || '/user_default.png'}
+                alt={profile.avatar_url || ''}
+                width={40}
+                height={40}
+                className="rounded-full overflow-hidden w-10 h-10 object-center object-contain"
+              />
+            ) : (
+              <Loading size={40} />
+            )}
+            <Link
+              href={'/blog/profiles/' + profile.id}
+              className="px-5 hover:underline"
+            >
+              {profile.full_name}
+            </Link>
+          </div>
+        )}
+
+        {post?.created_at ? (
+          <span className="text-xs text-gray-500">
+            {new Date(post.created_at).toDateString()}
+          </span>
+        ) : null}
+
+        <h2 className="card-title">{post?.title}</h2>
+
+        <p className={'overflow-ellipsis overflow-hidden line-clamp-2'}>
+          {post?.content}
+        </p>
       </div>
-    </button>
+    </div>
   )
 }

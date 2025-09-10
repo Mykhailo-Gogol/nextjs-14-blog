@@ -5,16 +5,15 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
-const redirectTo =
-  process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL ??
-  'http://localhost:3000/auth/callback'
-
 export default function GoogleSignIn() {
   const supabase = createClient()
 
   const handleGoogleSignIn = async () => {
     const data = await supabase.auth
-      .signInWithOAuth({ provider: 'google', options: { redirectTo } })
+      .signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL },
+      })
       .then()
 
     console.debug(data)

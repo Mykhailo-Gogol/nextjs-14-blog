@@ -36,7 +36,7 @@ export default async function ProfileById({
 
       <h1 className="text-center text-2xl my-5">Posts</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {(data as ProfileWithPosts).posts?.map((el: PostType) => (
+        {(data as ProfileWithPosts)?.posts.map((el: PostType) => (
           <Post post={el} key={el.id} />
         ))}
       </div>

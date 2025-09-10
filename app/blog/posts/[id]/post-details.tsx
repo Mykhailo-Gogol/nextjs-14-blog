@@ -7,11 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 
-export default function PostDetails({
-  post,
-}: {
-  post: PostWithProfile | null
-}) {
+export default function PostDetails({ post }: { post: PostWithProfile }) {
   const supabase = createClient()
 
   const [posterUrl, setPosterUrl] = useState<string | null>(null)
@@ -55,7 +51,7 @@ export default function PostDetails({
   }, [post?.id, supabase])
 
   return (
-    <section>
+    <section className="min-h-screen">
       <div className="card">
         <figure className="px-5">
           {posterUrl ? (
@@ -64,7 +60,7 @@ export default function PostDetails({
               alt={post?.title || 'poster'}
               width={300}
               height={300}
-              className={`rounded-xl h-60 ${posterUrl ? 'object-cover' : 'object-contain'}`}
+              className={`rounded-xl h-60 object-contain`}
               loading="lazy"
             />
           ) : (
@@ -80,7 +76,7 @@ export default function PostDetails({
                   alt={profile.avatar_url || ''}
                   width={40}
                   height={40}
-                  className="rounded-full overflow-hidden w-10 h-10 object-center object-cover"
+                  className="rounded-full overflow-hidden w-10 h-10 object-center object-contain"
                 />
               ) : (
                 <Loading size={40} />
@@ -93,12 +89,15 @@ export default function PostDetails({
               </Link>
             </div>
           )}
-          <h2 className="card-title">{post?.title}</h2>
-          {post?.created_at && (
-            <span className="text-xs">
-              {String(new Date(post?.created_at).toDateString())}
+
+          {post?.created_at ? (
+            <span className="text-xs text-gray-500">
+              {new Date(post.created_at).toDateString()}
             </span>
-          )}
+          ) : null}
+
+          <h2 className="card-title">{post?.title}</h2>
+
           <p className="w-full py-5 md:w-2/3 text-left">{post?.content}</p>
         </div>
       </div>
