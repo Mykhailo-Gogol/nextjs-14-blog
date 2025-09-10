@@ -6,7 +6,9 @@ import GoogleSignIn from '@/components/GoogleSignIn'
 
 export default function SignIn() {
   return (
-    <section className="flex justify-center items-center p-5 min-h-screen flex-col">
+    <section className="flex flex-col justify-center items-center min-h-screen p-5 gap-5">
+      <h1 className="text-5xl font-bold">Hello there! 👋</h1>
+
       <form>
         <input
           id="email"
@@ -24,7 +26,7 @@ export default function SignIn() {
           required
           className="input input-bordered w-full mb-5"
         />
-        <button formAction={signin} className="btn mb-5 w-full">
+        <button formAction={signin} className="btn btn-primary mb-5 w-full">
           Sign in
         </button>
 

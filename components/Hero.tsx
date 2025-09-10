@@ -13,8 +13,8 @@ export default async function Hero() {
   return (
     <div className="hero min-h-screen shadow-lg">
       <div className="hero-content w-full flex flex-col-reverse lg:flex-row lg:justify-between gap-10">
-        <div className="lg:max-w-md">
-          <h1 className="text-5xl font-bold">Hello there</h1>
+        <div className="lg:w-1/2">
+          <h1 className="text-5xl font-bold">Welcome to the blog! 💬</h1>
           <p className="py-6">
             Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
@@ -24,12 +24,13 @@ export default async function Hero() {
             Start Reading
           </Link>
         </div>
+
         <Image
           src="/hero.jpg"
           alt="hero image"
           width={300}
           height={300}
-          className="w-full lg:w-1/2 object-contain"
+          className="w-full lg:w-1/2 object-cover rounded-xl n"
         />
       </div>
     </div>

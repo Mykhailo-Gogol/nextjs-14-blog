@@ -99,7 +99,7 @@ export default function UploadAvatar({
 
       <div>
         <label className="btn btn-primary w-full" htmlFor={'avatars'}>
-          {uploading ? 'Uploading ...' : 'Upload'}
+          {uploading ? 'Uploading ...' : 'Upload avatar'}
         </label>
         <input
           className="absolute hidden"

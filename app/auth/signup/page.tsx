@@ -3,7 +3,9 @@ import { signup } from './actions'
 
 export default function SignUp() {
   return (
-    <section className="flex justify-center items-center p-5 min-h-screen flex-col">
+    <section className="flex flex-col justify-center items-center min-h-screen p-5 gap-5">
+      <h1 className="text-5xl font-bold">Almost there! ✅</h1>
+
       <form>
         <input
           id="email"
@@ -21,7 +23,7 @@ export default function SignUp() {
           required
           className="input input-bordered w-full mb-5"
         />
-        <button className="btn w-full" formAction={signup}>
+        <button className="btn btn-primary w-full" formAction={signup}>
           Sign up
         </button>
       </form>

@@ -104,7 +104,7 @@ export default function UploadPoster({
 
       <div>
         <label className="btn btn-primary w-full" htmlFor={'posters'}>
-          {uploading ? 'Uploading ...' : 'Upload'}
+          {uploading ? 'Uploading ...' : 'Upload poster'}
         </label>
         <input
           className="absolute hidden"

@@ -22,7 +22,7 @@ export default function GoogleSignIn() {
     <button
       type="button"
       onClick={() => handleGoogleSignIn()}
-      className="btn mb-5 w-full"
+      className="btn btn-outline mb-5 w-full"
     >
       <FontAwesomeIcon icon={faGoogle} width={20} height={20} />
       <span className="pl-2">Sign in with Google</span>

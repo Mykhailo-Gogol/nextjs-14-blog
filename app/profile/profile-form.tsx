@@ -73,7 +73,7 @@ export default function ProfileForm({ user }: { user: User | null }) {
   }
 
   return (
-    <section className="w-full p-5 md:min-h-screen ">
+    <section className="w-full flex flex-col p-5">
       <div className="grid gap-5">
         <UploadAvatar
           uid={user?.id ?? null}
@@ -121,8 +121,12 @@ export default function ProfileForm({ user }: { user: User | null }) {
             minLength={3}
           />
 
-          <button type="submit" className="btn w-full" disabled={loading}>
-            {loading ? 'Loading ...' : 'Update'}
+          <button
+            type="submit"
+            className="btn btn-primary w-full"
+            disabled={loading}
+          >
+            {loading ? 'Loading ...' : 'Update profile'}
           </button>
         </form>
 

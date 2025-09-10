@@ -56,7 +56,7 @@ export default function CreateForm({ user }: { user: User | null }) {
   }
 
   return (
-    <section className="w-full p-5 md:min-h-screen flex-col">
+    <section className="w-full flex flex-col p-5">
       <div className="grid gap-5">
         <UploadPoster
           title={title}
@@ -98,8 +98,12 @@ export default function CreateForm({ user }: { user: User | null }) {
             onChange={(e) => setContent(e.target.value)}
           />
 
-          <button className="btn w-full" disabled={loading} type="submit">
-            {loading ? 'Uploading ...' : 'Post'}
+          <button
+            className="btn btn-primary w-full"
+            disabled={loading}
+            type="submit"
+          >
+            {loading ? 'Uploading ...' : 'Create post'}
           </button>
         </form>
       </div>

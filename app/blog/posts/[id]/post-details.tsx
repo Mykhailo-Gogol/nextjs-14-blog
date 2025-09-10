@@ -83,7 +83,7 @@ export default function PostDetails({ post }: { post: PostWithProfile }) {
               )}
               <Link
                 href={'/blog/profiles/' + profile.id}
-                className="px-5 hover:underline"
+                className="px-5 underline hover:text-primary"
               >
                 {profile.full_name}
               </Link>
